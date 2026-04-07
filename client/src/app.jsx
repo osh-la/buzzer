@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Splash from './pages/Splash';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import Splash from './pages/splash';
+import Login from './pages/login';
+import Dashboard from './pages/dashboard';
 
 export default function App() {
   return (
