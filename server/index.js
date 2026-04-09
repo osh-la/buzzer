@@ -4,12 +4,28 @@ const { Server } = require('socket.io');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ncbuzzer.netlify.app"
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ["GET", "POST"]
+}));
+
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
-  cors: { origin: '*' },
+  cors: {
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+  },
 });
 
 io.on('connection', (socket) => {
@@ -32,4 +48,5 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(5001, () => console.log('Backend running on port 5000'));
+const PORT = process.env.PORT || 5001;
+server.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
