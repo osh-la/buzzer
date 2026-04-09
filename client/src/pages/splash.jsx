@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+<script src="https://cdn.tailwindcss.com"></script>
 export default function Splash() {
   const navigate = useNavigate();
 
