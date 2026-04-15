@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Splash from './pages/splash';
 import Login from './pages/login';
 import Dashboard from './pages/dashboard';
-import Footer from './pages/footer';
+import Footer from './components/footer';
 
 export default function App() {
   return (
