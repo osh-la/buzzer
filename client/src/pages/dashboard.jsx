@@ -23,8 +23,14 @@ export default function Dashboard() {
   useEffect(() => {
     const handleIncoming = ({ from }) => {
       setIncoming(from);
-      if (navigator.vibrate && enabled) navigator.vibrate(300);
-      setTimeout(() => setIncoming(null), 3000);
+
+      // 🔊 better vibration pattern
+      if (navigator.vibrate && enabled) {
+        navigator.vibrate([200, 100, 200, 100, 400]);
+      }
+
+      // ⏳ stay longer
+      setTimeout(() => setIncoming(null), 5000);
     };
 
     socket.on('incoming-call', handleIncoming);
@@ -35,17 +41,19 @@ export default function Dashboard() {
   const callRole = (role) => socket.emit('call-role', role);
 
   const enableAlerts = () => {
-    navigator.vibrate?.(1);
+    navigator.vibrate?.(50);
     setEnabled(true);
   };
 
-  // ✅ filter out current role
+  // filter out current role
   const filteredRoles = roles.filter(
     (r) => r.toLowerCase() !== currentRole?.toLowerCase()
   );
 
   return (
     <div className="h-screen bg-[#0a0a0a] text-white p-6">
+      
+      {/* header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-lg">
           ROLE: <span className="font-bold">{currentRole}</span>
@@ -61,6 +69,7 @@ export default function Dashboard() {
         )}
       </div>
 
+      {/* role buttons */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
         {filteredRoles.map((r) => (
           <button
@@ -73,11 +82,24 @@ export default function Dashboard() {
         ))}
       </div>
 
+      {/* 🔥 INCOMING POPUP */}
       {incoming && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
-          <div className="text-center">
-            <h1 className="text-4xl mb-4 animate-pulse">📳 {incoming}</h1>
-            <p className="text-gray-400">is buzzing</p>
+        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+          
+          {/* backdrop */}
+          <div className="absolute inset-0 bg-black/70 animate-fadeIn" />
+
+          {/* popup */}
+          <div className="relative bg-[#111] px-8 py-6 rounded-2xl shadow-2xl text-center animate-scaleIn">
+            
+            <h1 className="text-3xl font-bold mb-2 animate-bounce">
+              📳 {incoming.toUpperCase()}
+            </h1>
+
+            <p className="text-gray-300 text-lg">
+              is buzzing you
+            </p>
+
           </div>
         </div>
       )}
