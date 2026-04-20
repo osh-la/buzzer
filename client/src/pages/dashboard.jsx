@@ -97,7 +97,7 @@ export default function Dashboard() {
             </h1>
 
             <p className="text-gray-300 text-lg">
-              is buzzing you
+              buzzing
             </p>
 
           </div>
